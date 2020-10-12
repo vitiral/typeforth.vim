@@ -1,21 +1,17 @@
 " Vim syntax file
-" Language:    FORTH
-" Maintainer:  Christian V. J. Brüssow <cvjb@cvjb.de>
-" Last Change: Sa 07 Jan 2012 21:30:55 CET
-" Filenames:   *.fs,*.ft
-" URL:	       http://www.cvjb.de/comp/vim/forth.vim
+" Language:    TYPEFORTH
+" Maintainer:  Rett Berg
+" Last Change: Sun 11 Oct 2020 20:26:00 MST
+" Filenames:   *.tf
+" URL:	       None
 
-" $Id: forth.vim,v 1.13 2012/01/07 21:31:31 bruessow Exp $
-
-" The list of keywords is incomplete, compared with the offical ANS
-" wordlist. If you use this language, please improve it, and send me
-" the patches.
-"
-" Before sending me patches, please download the newest version of this file
-" from http://www.cvjb.de/comp/vim/forth.vim or http://www.vim.org/ (search
-" for forth.vim).
+" $Id: typeforth.vim,v 1.13 2012/01/07 21:31:31 bruessow Exp $
 
 " Many Thanks to...
+" 2020-10-11:
+" Rett Berg Changed from forth.vim to typeforth.vim and updated string
+" formatting.
+" Modified from http://www.cvjb.de/comp/vim/forth.vim
 " 
 " 2012-01-07:
 " Thilo Six <T.Six at gmx dot de> send a patch for cpoptions.
@@ -107,11 +103,11 @@ else
 endif
 
 " when wanted, highlight trailing white space
-if exists("forth_space_errors")
-    if !exists("forth_no_trail_space_error")
+if exists("typeforth_space_errors")
+    if !exists("typeforth_no_trail_space_error")
         syn match forthSpaceError display excludenl "\s\+$"
     endif
-    if !exists("forth_no_tab_space_error")
+    if !exists("typeforth_no_tab_space_error")
         syn match forthSpaceError display " \+\t"me=e-1
     endif
 endif
@@ -214,7 +210,8 @@ syn keyword forthCharOps KEY? TIB CR
 " highlight everything after the paren as a comment till a closing ')'
 syn match forthCharOps '\<char\s\S\s'
 syn match forthCharOps '\<\[char\]\s\S\s'
-syn region forthCharOps start=+."\s+ skip=+\\"+ end=+"+
+" TODO: remove?
+" syn region forthCharOps start=+."\s+ skip=+\\"+ end=+"+
 
 " char-number conversion
 syn keyword forthConversion <<# <# # #> #>> #S (NUMBER) (NUMBER?) CONVERT D>F
@@ -260,11 +257,8 @@ syn match forthFloat '\<-\=\d*[.]\=\d\+[DdEe][-+]\d\+\>'
 " highlighting for numbers otherwise it has no effect.
 syn region forthComment start='0 \[if\]' end='\[endif\]' end='\[then\]' contains=forthTodo
 
-" Strings
-syn region forthString start=+\.*\"+ end=+"+ end=+$+
-" XXX
-syn region forthString start=+s\"+ end=+"+ end=+$+
-syn region forthString start=+c\"+ end=+"+ end=+$+
+" " Strings
+syn region forthString start=+\.*\"+ end=+\"+
 
 " Comments
 syn match forthComment '\\\s.*$' contains=forthTodo,forthSpaceError
@@ -336,7 +330,7 @@ if version >= 508 || !exists("did_forth_syn_inits")
     delcommand HiLink
 endif
 
-let b:current_syntax = "forth"
+let b:current_syntax = "typeforth"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
